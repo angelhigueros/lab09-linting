@@ -1,6 +1,6 @@
-import { saludar } from "./js/componentes";
-import './styles.css'
+import React from "react";
+import ReactDOM from "react-dom";
+import { AppScreen } from "./js/components/AppScreen";
+import './css/global.css'
 
-const nombre = "Angel";
-saludar(nombre);
- 
+ReactDOM.render(<AppScreen />, document.getElementById("root"));

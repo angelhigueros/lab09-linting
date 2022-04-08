@@ -1,3 +1,4 @@
+const path = require("path");
 const HtmlWebPack = require("html-webpack-plugin");
 const MiniCssExtract = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
@@ -7,12 +8,24 @@ const Terser = require("terser-webpack-plugin");
 
 module.exports = {
   mode: "production",
+  entry: "./src/index.js",
   output: {
     clean: true,
     filename: "main.[contenthash].js",
+    path: path.resolve(__dirname, "public"),
   },
   module: {
     rules: [
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader", 
+          options: {
+            presets: ['@babel/preset-env', "@babel/preset-react"]
+          }
+        },
+      },
       {
         test: /\.html$/,
         loader: "html-loader",
@@ -42,7 +55,7 @@ module.exports = {
             presets: ["@babel/preset-env"],
           },
         },
-      }, 
+      },
     ],
   },
   optimization: {
@@ -51,7 +64,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPack({
-      title: "Mi Webpack App",
+      title: "Lab 8 - React JS",
       filename: "index.html",
       template: "./src/index.html",
     }),

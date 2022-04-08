@@ -1,14 +1,28 @@
+const path = require("path");
 const HtmlWebPack = require("html-webpack-plugin");
 const MiniCssExtract = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
+  entry: './src/index.js',
   output: {
     clean: true,
+    filename: 'bundle.js', 
+    path: path.resolve(__dirname, 'public')
   },
   module: {
     rules: [
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader", 
+          options: {
+            presets: ['@babel/preset-env', "@babel/preset-react"]
+          }
+        },
+      },
       {
         test: /\.html$/,
         loader: "html-loader",
