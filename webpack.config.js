@@ -1,31 +1,31 @@
-const path = require("path");
-const HtmlWebPack = require("html-webpack-plugin");
-const MiniCssExtract = require("mini-css-extract-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const path = require('path');
+const HtmlWebPack = require('html-webpack-plugin');
+const MiniCssExtract = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  mode: "development",
-  entry: './src/index.js',
+  mode: 'development',
+  entry: './src/index.jsx',
   output: {
     clean: true,
-    filename: 'bundle.js', 
-    path: path.resolve(__dirname, 'public')
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'public'),
   },
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader", 
+          loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', "@babel/preset-react"]
-          }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
         },
       },
       {
         test: /\.html$/,
-        loader: "html-loader",
+        loader: 'html-loader',
         options: {
           sources: false,
         },
@@ -33,31 +33,34 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: /styles.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /styles.css$/,
-        use: [MiniCssExtract.loader, "css-loader"],
+        use: [MiniCssExtract.loader, 'css-loader'],
       },
       {
         test: /.(img|png|jpe?g|gif)$/,
-        loader: "file-loader",
+        loader: 'file-loader',
       },
     ],
   },
   optimization: {},
   plugins: [
     new HtmlWebPack({
-      title: "Mi Webpack App",
-      filename: "index.html",
-      template: "./src/index.html",
+      title: 'Mi Webpack App',
+      filename: 'index.html',
+      template: './src/index.html',
     }),
     new MiniCssExtract({
-      filename: "[name].css",
+      filename: '[name].css',
       ignoreOrder: false,
     }),
     new CopyPlugin({
-      patterns: [{ from: "src/assets/", to: "assets/" }],
+      patterns: [{ from: 'src/assets/', to: 'assets/' }],
     }),
   ],
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+  },
 };
